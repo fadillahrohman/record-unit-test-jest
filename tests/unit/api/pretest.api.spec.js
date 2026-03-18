@@ -10,7 +10,7 @@ describe("pretest.api", () => {
       default: {
         get: jest.fn(),
         post: jest.fn(),
-      },
+      },    
     }));
 
     api = require("@/api/pretest.api");
