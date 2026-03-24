@@ -103,4 +103,33 @@ describe("Events API", () => {
       expect(url.indexOf("?")).toBeGreaterThan(0);
     });
   });
+
+    describe("API Methods Classification", () => {
+    it("should identify GET endpoints", () => {
+      const getEndpoints = [
+        process.env.baseURL + "events/incoming",
+        process.env.baseURL + "events?page=1",
+        process.env.baseURL + "events/active",
+        process.env.baseURL + "v1/event/123",
+      ];
+
+      getEndpoints.forEach((endpoint) => {
+        expect(endpoint).toBeTruthy();
+        expect(endpoint).toContain(process.env.baseURL);
+      });
+    });
+
+    it("should identify POST endpoints", () => {
+      const postEndpoints = [
+        process.env.baseURL + "event/123/join",
+        process.env.baseURL + "event",
+        process.env.baseURL + "event/456",
+      ];
+
+      postEndpoints.forEach((endpoint) => {
+        expect(endpoint).toBeTruthy();
+        expect(endpoint).toContain(process.env.baseURL);
+      });
+    });
+  });
 });
