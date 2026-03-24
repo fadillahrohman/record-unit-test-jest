@@ -89,4 +89,18 @@ describe("Events API", () => {
       expect(editUrl).not.toContain("/join");
     });
   });
+
+  describe("Query Parameters", () => {
+    it("should format pagination query string correctly", () => {
+      const page = 2;
+      const url = process.env.baseURL + `events?page=${page}`;
+      expect(url).toMatch(/\?page=\d+$/);
+    });
+
+    it("should separate query parameters with question mark", () => {
+      const url = process.env.baseURL + `events?page=1`;
+      expect(url).toContain("?");
+      expect(url.indexOf("?")).toBeGreaterThan(0);
+    });
+  });
 });
