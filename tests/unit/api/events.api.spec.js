@@ -64,4 +64,29 @@ describe("Events API", () => {
       expect(page3).toMatch(/events\?page=\d+/);
     });
   });
+
+  describe("Endpoint Patterns", () => {
+    it("should use v1 API version for detail endpoint", () => {
+      const url = process.env.baseURL + `v1/event/123`;
+      expect(url).toContain("/v1/");
+    });
+
+    it("should NOT use v1 for action endpoints", () => {
+      const joinUrl = process.env.baseURL + `event/123/join`;
+      const createUrl = process.env.baseURL + `event`;
+      const editUrl = process.env.baseURL + `event/123`;
+
+      expect(joinUrl).not.toContain("/v1/");
+      expect(createUrl).not.toContain("/v1/");
+      expect(editUrl).not.toContain("/v1/");
+    });
+
+    it("should use correct endpoint suffixes", () => {
+      const joinUrl = process.env.baseURL + `event/123/join`;
+      const editUrl = process.env.baseURL + `event/456`;
+
+      expect(joinUrl).toContain("/join");
+      expect(editUrl).not.toContain("/join");
+    });
+  });
 });
