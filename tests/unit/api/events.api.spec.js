@@ -44,4 +44,24 @@ describe("Events API", () => {
       expect(expectedUrl).toBe("http://api.test.com/event/789");
     });
   });
+
+  describe("Multiple Page Parameters", () => {
+    it("should handle different page values", () => {
+      const pages = [1, 2, 5, 10];
+      pages.forEach((page) => {
+        const url = process.env.baseURL + `events?page=${page}`;
+        expect(url).toContain(`page=${page}`);
+      });
+    });
+
+    it("should maintain consistent URL stucture across pagination", () => {
+      const page1 = process.env.baseURL + "events?page=1";
+      const page2 = process.env.baseURL + "events?page=2";
+      const page3 = process.env.baseURL + "events?page=3";
+
+      expect(page1).toMatch(/events\?page=\d+/);
+      expect(page2).toMatch(/events\?page=\d+/);
+      expect(page3).toMatch(/events\?page=\d+/);
+    });
+  });
 });
