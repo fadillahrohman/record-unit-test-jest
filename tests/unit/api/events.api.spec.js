@@ -1,0 +1,47 @@
+describe("Events API", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    process.env.baseURL = "http://api.test.com/";
+  });
+
+  describe("URL Construction and Endpoints", () => {
+    it("should construct incoming events endpoint correctly", () => {
+      const expectedUrl = process.env.baseURL + "events/incoming";
+      expect(expectedUrl).toBe("http://api.test.com/events/incoming");
+    });
+
+    it("should construct events list endpoint with pagination", () => {
+      const page = 1;
+      const expectedUrl = process.env.baseURL + `event?page=${page}`;
+      expect(expectedUrl).toBe("http://api.test.com/event?page=1");
+    });
+
+    it("should construct event detail endpoint with ID", () => {
+      const eventId = "123";
+      const expectedUrl = process.env.baseURL + `v1/event/${eventId}`;
+      expect(expectedUrl).toBe("http://api.test.com/v1/event/123");
+    });
+
+    it("should construct active events endpoint correctly", () => {
+      const expectedUrl = process.env.baseURL + "events/active";
+      expect(expectedUrl).toBe("http://api.test.com/events/active");
+    });
+
+    it("should construct joint event endpoint with ID", () => {
+      const eventId = "456";
+      const expectedUrl = process.env.baseURL + `event/${eventId}/join`;
+      expect(expectedUrl).toBe("http://api.test.com/event/456/join");
+    });
+
+    it("should construct create event endpoint correctly", () => {
+      const expectedUrl = process.env.baseURL + "event";
+      expect(expectedUrl).toBe("http://api.test.com/event");
+    });
+
+    it("should construct edit event endpoint with ID", () => {
+      const eventId = "789";
+      const expectedUrl = process.env.baseURL + `event/${eventId}`;
+      expect(expectedUrl).toBe("http://api.test.com/event/789");
+    });
+  });
+});
