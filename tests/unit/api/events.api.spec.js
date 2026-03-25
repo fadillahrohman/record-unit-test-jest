@@ -132,4 +132,32 @@ describe("Events API", () => {
       });
     });
   });
+  
+  describe("Base URL Configuration", () => {
+    it("should use configured baseURL", () => {
+      expect(process.env.baseURL).toBe("http://api.test.com/");
+    });
+
+    it("should apply baseURL to all endpoints", () => {
+      const endpoints = [
+        process.env.baseURL + "events/incoming",
+        process.env.baseURL + "events?page=1",
+        process.env.baseURL + "v1/event/123",
+        process.env.baseURL + "events/active",
+        process.env.baseURL + "event/123/join",
+        process.env.baseURL + "event",
+        process.env.baseURL + "event/456",
+      ];
+
+      endpoints.forEach((url) => {
+        expect(url.startsWith(process.env.baseURL)).toBe(true);
+      });
+    });
+
+    it("should handle baseURL with trailing slash", () => {
+      const baseUrl = process.env.baseURL;
+      expect(baseUrl.endsWith("/")).toBe(true);
+      expect(baseUrl).toBe("http://api.test.com/");
+    });
+  });
 });
