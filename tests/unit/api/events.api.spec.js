@@ -104,7 +104,7 @@ describe("Events API", () => {
     });
   });
 
-    describe("API Methods Classification", () => {
+  describe("API Methods Classification", () => {
     it("should identify GET endpoints", () => {
       const getEndpoints = [
         process.env.baseURL + "events/incoming",
@@ -132,7 +132,7 @@ describe("Events API", () => {
       });
     });
   });
-  
+
   describe("Base URL Configuration", () => {
     it("should use configured baseURL", () => {
       expect(process.env.baseURL).toBe("http://api.test.com/");
@@ -158,6 +158,43 @@ describe("Events API", () => {
       const baseUrl = process.env.baseURL;
       expect(baseUrl.endsWith("/")).toBe(true);
       expect(baseUrl).toBe("http://api.test.com/");
+    });
+  });
+
+  describe("Events API Export Functions", () => {
+    it("should export getIncomingEvents function", () => {
+      const { getIncomingEvents } = require("@/api/events.api");
+      expect(typeof getIncomingEvents).toBe("function");
+    });
+
+    it("should export apiGetEvents function", () => {
+      const { apiGetEvents } = require("@/api/events.api");
+      expect(typeof apiGetEvents).toBe("function");
+    });
+
+    it("should export apiGetEventDetail function", () => {
+      const { apiGetEventDetail } = require("@/api/events.api");
+      expect(typeof apiGetEventDetail).toBe("function");
+    });
+
+    it("should export apiGetEventsActive function", () => {
+      const { apiGetEventsActive } = require("@/api/events.api");
+      expect(typeof apiGetEventsActive).toBe("function");
+    });
+
+    it("should export apiJoinEvent function", () => {
+      const { apiJoinEvent } = require("@/api/events.api");
+      expect(typeof apiJoinEvent).toBe("function");
+    });
+
+    it("should export apiCreateEvent function", () => {
+      const { apiCreateEvent } = require("@/api/events.api");
+      expect(typeof apiCreateEvent).toBe("function");
+    });
+
+    it("should export apiEditEvent function", () => {
+      const { apiEditEvent } = require("@/api/events.api");
+      expect(typeof apiEditEvent).toBe("function");
     });
   });
 });
