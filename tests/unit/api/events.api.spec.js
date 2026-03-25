@@ -197,4 +197,36 @@ describe("Events API", () => {
       expect(typeof apiEditEvent).toBe("function");
     });
   });
+
+  describe("Events API Function Parameters", () => {
+    beforeEach(() => {
+      jest.resetModules();
+      process.env.baseURL = "http://api.test.com/";
+    });
+
+    it("apiGetEvents should accept page parameter", () => {
+      const { apiGetEvents } = require("@/api/events.api");
+      expect(apiGetEvents.length).toBe(1);
+    });
+
+    it("apiGetEventDetail should accept event_id parameter", () => {
+      const { apiGetEventDetail } = require("@/api/events.api");
+      expect(apiGetEventDetail.length).toBe(1);
+    });
+
+    it("apiJoinEvent should accept event_id parameter", () => {
+      const { apiJoinEvent } = require("@/api/events.api");
+      expect(apiJoinEvent.length).toBe(1);
+    });
+
+    it("apiCreateEvent should accept params parameter", () => {
+      const { apiCreateEvent } = require("@/api/events.api");
+      expect(apiCreateEvent.length).toBe(1);
+    });
+
+    it("apiEditEvent should accept event_id and params parameters", () => {
+      const { apiEditEvent } = require("@/api/events.api");
+      expect(apiEditEvent.length).toBe(2);
+    });
+  });
 });
