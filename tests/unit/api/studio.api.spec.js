@@ -65,4 +65,28 @@ describe("studio.api", () => {
       "https://services.test/v1/metronom/ce"
     );
   });
+
+  it("calls get studio endpoint", async () => {
+    await api.apiGetStudio(123);
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/123"
+    );
+  });
+
+  it("calls get studio endpoint", async () => {
+    await api.apiGetStudio(5);
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/5"
+    );
+  });
+
+  it("calls get studio endpoint", async () => {
+    await api.apiGetStudio(2);
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/2"
+    );
+  });
 });
