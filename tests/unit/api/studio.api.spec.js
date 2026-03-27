@@ -1,0 +1,44 @@
+describe("studio.api", () => {
+  let api;
+  let studioClients;
+
+  beforeEach(() => {
+    process.env.servicesApi = "https://services.test/";
+    jest.resetModules();
+    jest.doMock("@/api/studioClients", () => ({
+      __esModule: true,
+      default: {
+        get: jest.fn(),
+        post: jest.fn(),
+      },
+    }));
+
+    api = require("@/api/studio.api");
+    studioClients = require("@/api/studioClients").default;
+    jest.clearAllMocks();
+  });
+
+  it("calls get ext endpoint without version", async () => {
+    await api.apiGetExt();
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/lang"
+    );
+  });
+
+  it("calls get ext endpoint with version", async () => {
+    await api.apiGetExt("1.0");
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/lang?v=1.0"
+    );
+  });
+
+  it("calls get ext endpoint with version", async () => {
+    await api.apiGetExt("2.0");
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/lang?v=2.0"
+    );
+  });
+});
