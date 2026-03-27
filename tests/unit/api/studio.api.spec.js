@@ -41,4 +41,28 @@ describe("studio.api", () => {
       "https://services.test/v1/metronom/ce/lang?v=2.0"
     );
   });
+
+  it("calls get ext endpoint with version", async () => {
+    await api.apiGetExt("3.0");
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/lang?v=3.0"
+    );
+  });
+
+  it("calls get ext endpoint with version", async () => {
+    await api.apiGetExt("4.0");
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce/lang?v=4.0"
+    );
+  });
+
+  it("calls get all studio endpoint", async () => {
+    await api.apiGetAllStudio();
+
+    expect(studioClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/metronom/ce"
+    );
+  });
 });
