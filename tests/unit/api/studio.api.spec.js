@@ -89,4 +89,34 @@ describe("studio.api", () => {
       "https://services.test/v1/metronom/ce/2"
     );
   });
+
+  it("calls create studio endpoint", async () => {
+      const params = { name: "Test Studio", kind: "video" };
+      await api.apiCreateStudio(params);
+  
+      expect(studioClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/metronom/ce/file",
+        params
+      );
+    });
+  
+    it("calls edit studio endpoint", async () => {
+      const params = { name: "Updated Studio" };
+      await api.apiEditStudio(1, params);
+  
+      expect(studioClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/metronom/ce/1/edit",
+        params
+      );
+    });
+  
+    it("calls edit studio endpoint", async () => {
+      const params = { name: "New Update Studio" };
+      await api.apiEditStudio(5, params);
+  
+      expect(studioClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/metronom/ce/5/edit",
+        params
+      );
+    });
 });
