@@ -51,4 +51,22 @@ describe("gallery.api", () => {
       payload
     );
   });
+
+   it("calls edit gallery endpoint", async () => {
+    const payload = { title: "Updated Gallery Item" };
+    await api.apiEditGallery(9, payload);
+
+    expect(uploadClient.post).toHaveBeenCalledWith(
+      "https://example.test/gallery/9",
+      payload
+    );
+  });
+
+  it("calls delete gallery endpoint", async () => {
+    await api.apiDeleteGallery(9);
+
+    expect(httpClient.post).toHaveBeenCalledWith(
+      "https://example.test/gallery/9/delete"
+    );
+  });
 });
