@@ -40,4 +40,20 @@ describe("schedules.api", () => {
       "https://services.test/v1/statistics/schedules?day=15&month=4"
     );
   });
+
+  it("calls schedules endpoint with all params", async () => {
+    await api.apiGetSchedules(15, 4, 2026);
+
+    expect(servicesClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/statistics/schedules?day=15&month=4&year=2026"
+    );
+  });
+
+  it("calls schedules endpoint with month and year only", async () => {
+    await api.apiGetSchedules(undefined, 4, 2026);
+
+    expect(servicesClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/statistics/schedules?&month=4&year=2026"
+    );
+  });
 });
