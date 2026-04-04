@@ -41,4 +41,20 @@ describe("cities.api", () => {
 
     expect(httpClient.get).toHaveBeenCalledWith("https://example.test/cities");
   });
+
+  it("calls available cities endpoint", async () => {
+    await api.apiGetAvailableCities(4, 9);
+
+    expect(httpClient.get).toHaveBeenCalledWith(
+      "https://example.test//batch/4/program/9/cities"
+    );
+  });
+
+  it("calls search cities endpoint", async () => {
+    await api.apiSearchCities("jakarta");
+
+    expect(httpClient.get).toHaveBeenCalledWith(
+      "https://example.test/cities/jakarta"
+    );
+  });
 });
