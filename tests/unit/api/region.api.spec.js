@@ -43,4 +43,34 @@ describe("region.api", () => {
       );
     });
   });
+
+  describe("POST endpoints", () => {
+    it("calls region create endpoint", async () => {
+      const payload = { name: "West Region" };
+      await api.apiCreate(payload);
+
+      expect(servicesClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/region/create",
+        payload
+      );
+    });
+
+    it("calls region update endpoint", async () => {
+      const payload = { name: "West Region Updated" };
+      await api.apiUpdate("abc-123", payload);
+
+      expect(servicesClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/region/update?uuid=abc-123",
+        payload
+      );
+    });
+
+    it("calls region delete endpoint", async () => {
+      await api.apiDelete("abc-123");
+
+      expect(servicesClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/region/delete?uuid=abc-123"
+      );
+    });
+  });
 });
