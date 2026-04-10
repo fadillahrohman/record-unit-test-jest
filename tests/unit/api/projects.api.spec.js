@@ -66,4 +66,52 @@ describe("projects.api", () => {
       );
     });
   });
+
+  describe("POST endpoints", () => {
+    it("calls create project endpoint", async () => {
+      const payload = { title: "New Project" };
+      await api.apiPostProject(payload);
+
+      expect(httpClient.post).toHaveBeenCalledWith(
+        "https://example.test/project",
+        payload
+      );
+    });
+
+    it("calls bid project endpoint", async () => {
+      const payload = { amount: 50000 };
+      await api.apiBidProject(10, payload);
+
+      expect(uploadClient.post).toHaveBeenCalledWith(
+        "https://example.test/project/10/bid",
+        payload
+      );
+    });
+
+    it("calls approve project endpoint", async () => {
+      await api.apiApproveProject(10, 20);
+
+      expect(httpClient.post).toHaveBeenCalledWith(
+        "https://example.test/project/10/user/20/approve"
+      );
+    });
+
+    it("calls edit project endpoint", async () => {
+      const payload = { title: "Updated Project" };
+      await api.apiEditProject(10, payload);
+
+      expect(httpClient.post).toHaveBeenCalledWith(
+        "https://example.test/project/10/edit",
+        payload
+      );
+    });
+
+    it("calls delete project endpoint", async () => {
+      await api.apiDeleteProject(10);
+
+      expect(httpClient.post).toHaveBeenCalledWith(
+        "https://example.test/project/10/delete"
+      );
+    });
+  });
 });
