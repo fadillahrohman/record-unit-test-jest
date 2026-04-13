@@ -55,4 +55,58 @@ describe("forms.api", () => {
       );
     });
   });
+
+  describe("Categories endpoints", () => {
+    it("calls categories list endpoint without page", async () => {
+      await api.apiCategories();
+
+      expect(formClients.get).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/categories"
+      );
+    });
+
+    it("calls categories list endpoint with page", async () => {
+      await api.apiCategories(2);
+
+      expect(formClients.get).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/categories?page=2"
+      );
+    });
+
+    it("calls create category endpoint", async () => {
+      const payload = { name: "Math" };
+      await api.apiCreateCategories(payload);
+
+      expect(formClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/category/create",
+        payload
+      );
+    });
+
+    it("calls detail category endpoint", async () => {
+      await api.apiDetailCategories(10);
+
+      expect(formClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/category/detail?categoryId=10"
+      );
+    });
+
+    it("calls edit category endpoint", async () => {
+      const payload = { name: "English" };
+      await api.apiEditCategories(10, payload);
+
+      expect(formClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/category/edit?categoryId=10",
+        payload
+      );
+    });
+
+    it("calls delete category endpoint", async () => {
+      await api.apiDeleteCategories(10);
+
+      expect(formClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/category/delete?categoryId=10"
+      );
+    });
+  });
 });
