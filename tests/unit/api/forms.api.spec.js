@@ -109,4 +109,50 @@ describe("forms.api", () => {
       );
     });
   });
+
+  describe("Questions endpoints", () => {
+    it("calls form questions endpoint", async () => {
+      await api.apiFormQuestion(3, 1);
+
+      expect(formClients.get).toHaveBeenCalledWith(
+        "https://services.test/v1/form/questions?formId=3&page=1"
+      );
+    });
+
+    it("calls add form question endpoint", async () => {
+      const payload = { text: "What is your age?" };
+      await api.apiFormAddQuestion(3, payload);
+
+      expect(formClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/add?formId=3",
+        payload
+      );
+    });
+
+    it("calls form detail question endpoint", async () => {
+      await api.apiFormDetailQuestion(3, 15);
+
+      expect(formClients.get).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/detail?formId=3&questionId=15"
+      );
+    });
+
+    it("calls edit form question endpoint", async () => {
+      const payload = { text: "Updated question?" };
+      await api.apiFormEditQuestion(3, 15, payload);
+
+      expect(formClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/edit?formId=3&questionId=15",
+        payload
+      );
+    });
+
+    it("calls delete form question endpoint", async () => {
+      await api.apiFormDeleteQuestion(3, 15);
+
+      expect(formClients.post).toHaveBeenCalledWith(
+        "https://services.test/v1/form/question/delete?formId=3&questionId=15"
+      );
+    });
+  });
 });
