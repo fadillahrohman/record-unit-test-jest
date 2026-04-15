@@ -155,4 +155,36 @@ describe("forms.api", () => {
       );
     });
   });
+
+  it("calls delete form endpoint", async () => {
+    await api.apiDeleteForms(5);
+
+    expect(formClients.post).toHaveBeenCalledWith(
+      "https://services.test/v1/form/form/delete?formId=5"
+    );
+  });
+
+  it("calls get forms endpoint without params", async () => {
+    await api.apiGetForms();
+
+    expect(formClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/form/forms?"
+    );
+  });
+
+  it("calls get forms endpoint with all params", async () => {
+    await api.apiGetForms(2, "survey", "customer");
+
+    expect(formClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/form/forms?page=2&kind=survey&search=customer"
+    );
+  });
+
+  it("calls get forms endpoint with page and kind only", async () => {
+    await api.apiGetForms(1, "quiz");
+
+    expect(formClients.get).toHaveBeenCalledWith(
+      "https://services.test/v1/form/forms?page=1&kind=quiz"
+    );
+  });
 });
