@@ -139,4 +139,58 @@ describe("lti.api", () => {
       );
     });
   });
+
+  describe("Course and module endpoints", () => {
+    it("calls LTI course detail endpoint", async () => {
+      await api.apiGetLTICourseDetail("course-1");
+
+      expect(publicLTIClient.get).toHaveBeenCalledWith(
+        "v1/lti/courses/course-1"
+      );
+    });
+
+    it("calls LTI course modules endpoint", async () => {
+      await api.apiGetLTICourseModules("course-1");
+
+      expect(publicLTIClient.get).toHaveBeenCalledWith(
+        "v1/lti/courses/course-1/modules"
+      );
+    });
+
+    it("calls LTI module detail endpoint", async () => {
+      await api.apiGetLTIModuleDetail("course-1", "module-10");
+
+      expect(servicesClients.get).toHaveBeenCalledWith(
+        "v1/lti/courses/course-1/modules/module-10"
+      );
+    });
+
+    it("calls mark module complete endpoint", async () => {
+      const payload = { is_completed: true };
+      await api.apiMarkModuleComplete("course-1", "module-10", payload);
+
+      expect(servicesClients.post).toHaveBeenCalledWith(
+        "v1/lti/courses/course-1/modules/module-10/complete",
+        payload
+      );
+    });
+
+    it("calls LTI user progress endpoint", async () => {
+      await api.apiGetLTIUserProgress("course-1");
+
+      expect(servicesClients.get).toHaveBeenCalledWith(
+        "v1/lti/courses/course-1/progress"
+      );
+    });
+
+    it("calls submit module assessment endpoint", async () => {
+      const payload = { answers: ["A", "B"] };
+      await api.apiSubmitModuleAssessment("course-1", "module-10", payload);
+
+      expect(servicesClients.post).toHaveBeenCalledWith(
+        "v1/lti/courses/course-1/modules/module-10/submit",
+        payload
+      );
+    });
+  });
 });
