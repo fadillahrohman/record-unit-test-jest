@@ -85,4 +85,47 @@ describe("users_backup.api", () => {
       "https://example.test/students?page=1&search=budi&programId=8&cityId=4&sort=name&sortType=asc&studentStatus=0"
     );
   });
+
+  it("calls approved users endpoint with required params only", async () => {
+    await api.apiGetUsersApproved({ page: 2 });
+
+    expect(httpClient.get).toHaveBeenCalledWith(
+      "https://example.test/students?page=2"
+    );
+  });
+
+  it("calls approved users by school endpoint", async () => {
+    await api.apiGetUsersApprovedBySchool({
+      page: 1,
+      search: "andi",
+      programId: 1,
+      cityId: 2,
+      sortBy: "createdAt",
+      sortType: "desc",
+      studentStatus: 1,
+      schoolId: 90,
+    });
+
+    expect(httpClient.get).toHaveBeenCalledWith(
+      "https://example.test/school/90/students?page=1&search=andi&programId=1&cityId=2&sort=createdAt&sortType=desc&studentStatus=1"
+    );
+  });
+
+  it("calls get user by id endpoint", async () => {
+    await api.apiGetUserById(5);
+
+    expect(httpClient.get).toHaveBeenCalledWith(
+      "https://example.test/student/5"
+    );
+  });
+
+  it("calls create user endpoint", async () => {
+    const payload = { name: "Dina" };
+    await api.apiPostUser(payload);
+
+    expect(httpClient.post).toHaveBeenCalledWith(
+      "https://example.test/auth/register/students",
+      payload
+    );
+  });
 });
