@@ -11,7 +11,7 @@ describe("topic.api", () => {
         get: jest.fn(),
         post: jest.fn(),
       },
-    }));
+    }));    
 
     api = require("@/api/topic.api");
     servicesClient = require("@/api/servicesClients").default;
@@ -23,6 +23,14 @@ describe("topic.api", () => {
 
     expect(servicesClient.get).toHaveBeenCalledWith(
       "https://services.test/v1/topics/ce/10"
+    );
+  });
+
+  it("calls get topic endpoint", async () => {
+    await api.apiGetTopic(2);
+
+    expect(servicesClient.get).toHaveBeenCalledWith(
+      "https://services.test/v1/topics/ce/2"
     );
   });
 
@@ -46,6 +54,16 @@ describe("topic.api", () => {
     );
   });
 
+  it("calls edit topic endpoint", async () => {
+    const payload = { title: "Edited Topic" };
+    await api.apiEditTopic(2, payload);
+
+    expect(servicesClient.post).toHaveBeenCalledWith(
+      "https://services.test/v1/topics/2/edit",
+      payload
+    );
+  });
+
   it("calls delete topic endpoint", async () => {
     await api.apiDeleteTopic(7);
 
@@ -59,6 +77,14 @@ describe("topic.api", () => {
 
     expect(servicesClient.get).toHaveBeenCalledWith(
       "https://services.test/v1/topics?page=2&kind=public&search=javascript"
+    );
+  });
+
+  it("calls list endpoint with all filters", async () => {
+    await api.apiGetListTopic(1, "public", "go");
+
+    expect(servicesClient.get).toHaveBeenCalledWith(
+      "https://services.test/v1/topics?page=1&kind=public&search=go"
     );
   });
 
