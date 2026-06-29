@@ -12,7 +12,7 @@ describe("newsletter.api", () => {
         post: jest.fn(),
       },
     }));
-
+yield
     api = require("@/api/newsletter.api");
     servicesClients = require("@/api/servicesClients").default;
     jest.clearAllMocks();
